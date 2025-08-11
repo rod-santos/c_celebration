@@ -1,0 +1,134 @@
+=========================================================== C Change Variable Values
+
+If we assign a new value to an existing variable, it will overwrite the previous value:
+
+int myNum = 15; //myNum is 15
+myNum= 10; //Now myNum 10
+
+-----
+
+We can also assign the value of one variable to another:
+
+int myNum = 15;
+
+int myOtherNum = 23;
+
+//Assign the value of myOtherNum (23) to myNum
+myNum = myotherNum;
+
+//myNum is now 23, instead of 15
+printf("%d", myNum);
+
+-----
+
+We can also yet copy values to empty variables:
+
+//Create a variable and assign the value 15 to it
+int myNum = 15;
+
+//Declare a variable without assinging it a value
+int myOtherNum;
+
+//Assign the value of myNum to myOtherNum
+myOtherNum = myNum;
+
+//myOtherNum now has 15 as a value
+printf("%d", myOtherNum);
+
+----- Add Variable Together
+
+To add a variable to another variable, you can use the + operator:
+
+int x = 5;
+int y = 6;
+int sum = x + y:
+printf("%d", sum);
+
+
+
+=========================================================== C Declare Multiple Variables
+
+
+
+To declare more than one variable of the same type, use a comma-separated list:
+
+int x, y, z;
+x = y = z = 50;
+printf("%d", x + y + z);
+
+
+=========================================================== C Variable Names (Identifiers)
+
+
+All C variables must be identified with unique names.
+
+These unique names are called identifiers.
+
+Identifiers can be short names (like x and y) or more descriptive names (age, sum, totalVolume).
+
+***NOTE: It is rocommended to use descriptive names in order to create understandable and maintanable code:
+
+Ex:
+
+//Good variable name
+int minutesPerHour = 60;
+
+//Ok, but not so easy to understad what "m" actually is.
+int m = 60;
+
+
+
+GENERAL RULES for Variable Names:
+
+   ______________________________________________________________________________
+   |1. Names can contain letter, digits and underscores.			|
+   |										|
+   |2. Names must begin with a ltter or an uderscore (_).			|
+   |										|
+   |3. Names ares case-sensitive (myVar and myvar are different variables).	|
+   |										|
+   |4. Name cannot contain whitespaces or special characters like !, #, %, etc.	|
+   |										|
+   |5. Reserved words (such as int) cannot be used as names.			|
+   ------------------------------------------------------------------------------
+
+
+=========================================================== C Variables - Examples
+
+
+Real-Life Example:
+
+Often in our examples, we simplify variable names to match their data type (myInt or myNum for int types, myChar for char types, and so on). This is done to avoid confusion.
+
+However, for a pratical example of using variables, we have created a program that stores different data about a college student:
+
+// Student data
+int studentID = 15;
+int studentAge = 23;
+float studentFee = 75.25;
+char = studentGrade = 'B';
+
+// Print variables
+printf("Student id: %d\n", studentID);
+printf("Student age: %d\n", studentAge);
+printf("Student fee: %f\n", studentFee);
+printf("Student grade: %c\n", studentGrade);
+
+
+========== Calculate the Area of a Retangle:
+
+
+In this real life example, we create a program to calculate the area of a retangle (by multiplying the length and width):
+
+//Creat integer variables
+int length = 4;
+int width = 6;
+int area;
+
+//Calculate the area of a retangle
+area = length * width;
+
+//Print the result
+printf("Length is: %d\n", length);
+printf("Width is: %d\n", width);
+printf("The area of the rectangle is: %d\n", area);

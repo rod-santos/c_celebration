@@ -1,0 +1,714 @@
+=========================================================== C MEMORY MANAGEMENT
+
+Memory management is the process of handling how much memory a program uses through different operations.
+
+
+========== Memory in C
+
+
+Understanding how memory works in C is important. When you create a basic variable, C will automatically reserve space for that variable. An int variable for example, will typically occupy 4 bytes of memory, while a double variable will occupy 8 bytes of memory.
+
+You can use the sizeof operator to find the size of different types:
+
+
+Ex:
+-----
+
+int myInt;
+float myFloat;
+double myDouble;
+char myChar;
+
+printf("%lu\n", sizeof(myInt));		// 4 bytes 
+printf("%lu\n", sizeof(myFloat));	// 4 bytes
+printf("%lu\n", sizeof(myDouble));	// 8 bytes
+printf("%lu\n", sizeof(myChar));	// 1 byte
+
+-----
+
+
+
+Why is it important to know?
+
+If you create a program that occupies too much, or unnecessary memory, it can result in slow and poor performance.
+
+In C, you have to manage memory yourself. It is a complicated task, but is also quite powerful when used correctly: Properly managing the computer memory optimizes the performance of the program, so it is useful that you know how to release memory when it is no longer required and only use as littele as necessary for the task.
+
+In previous chapters you learned about memory address and pointers.
+
+Both have an importance when it comes to memory management, since it is possible to work directly with memory through pointers.
+
+But be careful; pointers must be handled with care, since it is possible to damage data stored in other memory adress.
+
+
+
+==========Memory Management
+
+
+Memory Management is the process of handling how much memory a program uses through allocation, reallocation and deallocation (often refered to as "freeing"). We will introduce each of these topics in the following chapters.
+
+
+
+=========================================================== C ALLOCATE MEMORY
+
+
+The process of reserving memory is called allocation. The way to allocate memory depends on the type of memory.
+
+C has two types of memory: Static memory and dynamic memory.
+
+
+========== Static Memory
+
+Static memory is memory that is reserved for variables before the program runs. Allocation of static memory is also known as compile time memory allocation.
+
+C automatically allocates memory of every variable when the program is compiled.
+
+For example, if you create an integer array of 20 students (e.g for a summer semester), C will reserve space for 20 elements which is typically 80 bytes of memory (20*4):
+
+
+Ex:
+-----
+
+int students[20];
+printf("%lu", sizeof(students));	// 80 bytes
+
+-----
+
+But when the semester starts, it turns out that only 12 students are attending. Then you have wasted the space of 8 unused elements.
+
+Since you are not able to change the size of the array, you are left with unnecessary reserved memory.
+
+Note that the program will still run, and it is not damaged in any way. But if your program contains a lot of this kind of code, it may run slower than it optimally could.
+
+If you want better control of allocated memory, take a look at Dynamic Memory below.
+
+
+
+
+========== Dynamic Memory
+
+
+
+Dynamic memory is memory that is allocated after the program starts running. Allocation of dynamic memory cal also be referred to as runtime memory allocation.
+
+Unlike with static memory, you have full control over how much memory is being used at any time. YOu can write code to determine how much memory you need and allocate it.
+
+Dynamic memory does not belong to a variable, it can only be accessed with pointers.
+
+To allocate dynamic memory, you can use the malloc() of calloc() functions. It is necessary to include the <stdlib.h> header to use them. The malloc() and calloc() functions allocate some memory and return a pointer to its address.
+
+-----
+
+int *ptr1 = malloc(size);
+int *ptr2 = calloc(amount, size);
+
+-----
+
+The malloc() function has one parameter, size, which specifies how much memory to allocate, measured in bytes.
+
+The calloc() functions has two parameters:
+
+	* amount - Specifies the amount of items to allocate
+	* size - Specifies the size of each item measured in bytes
+
+
+***NOTE: The data in the memory allocated by malloc() is unpredictable. To avoid unexpected values, make sure to write something into the memory before reading it.
+
+Unlile malloc(), calloc() function writes zeroes into all of the allocated memory. However, this makes calloc() slightly less efficient.
+
+The best way to allocate the right amount of memory for a data type is to use the sizeof operator:
+
+
+Ex:
+-----
+
+int *ptr1, *ptr2;
+ptr1 = malloc(sizeof(*ptr1));
+ptr2 = calloc(1, sizeof(*ptr2));
+
+-----
+
+
+Be careful sizeof(*ptr1) tells C to measure the size of the data at the address. If you forget the * and write sizeof(ptr1) instead, it will measure the size of the pointer itself, which is the (usually) 8 bytes that are needed to store a memory address.
+
+
+Note: The sizeof operator cannot measure how much dynamic memory is allocated. When measuring dynamic memory, it only tells you the size of the data type of the memory. For example, if you reserve space for 5 float values, the sizeof operator will return 4, which is the number of bytes needed for a single float value.
+
+
+Let's use dynamic memory to improve the students example above.
+
+As noted previously, we cannot use sizeof() to measure how much memory was allocated, we have to calculate that by multiplying the amount of items by the size of the data type:
+
+
+Ex:
+-----
+
+int *students;
+int numStudents = 12;
+students = calloc(numStudents, sizeof(*students));
+printf("%d", numStudents * sizeof(*students));  // 48 bytes
+
+-----
+
+
+========== NOTES:
+
+
+When working with dynamic memory allocation, you should also check for errors and free memory at the en of the program. You will learn more about this in the next chapters.
+
+
+========== Stack Memory
+
+For completeness, it is worth mentioning stack memory. Stack memory is a type of dynamic memory which is reserved for varibales that are declared inside functions. Variables declared inside a function use stack memory rather than static memory.
+
+When a function is called, stack memory is allocated for the variable in the function. When the function returns the stack memory is freed.
+
+It is good to be aware of stack memory to be able to handle the memory usage of nested functions calls and recursion. Recursion that repeats itself too many times may take up too much stack memory. When that happens it is called a stack overflow.
+
+
+
+=========================================================== C ACCESS MEMORY
+
+========== Access Dynamic Memory
+
+
+
+Dynamic memory behaves like an array, with its data type specified by the type of the pointer.
+
+As with arrays, to access an element in dynamic memory, refer to its index number:
+
+
+-----
+ptf[0] = 12;
+-----
+
+
+We can also dereference the pointer to access the first element:
+
+
+-----
+*ptr = 12;
+-----
+
+
+
+
+
+Ex:
+-----
+
+Read from and write to dynamic memory:
+
+// Alocate memory
+int *ptr;
+ptr = calloc(4, sizeof(*ptr));
+
+//Write to the memory
+*ptr = 2;
+ptr[1] = 4;
+ptr[2] = 6;
+
+// Read from the memory
+printf("%d\n", *ptr);
+printf("%d\n", ptr[1], ptr[2], ptr[3]);
+
+-----
+
+
+
+========== A note about data types:
+
+Dynamic memory does not have its own data type, it is just a sequence of bytes. The data in the memory can be interpreted as a type based on the data type of the pointer.
+
+In this example a pointer to four bytes can be interpreted as one int value (4 bytes) or as an array of 4 char values (1 byte each).
+
+
+Ex:
+-----
+
+int *ptr1 = malloc(4);
+chat *ptr2 = (char*) ptr1;
+ptr1[0] = 1684234849;
+printf("%d is %c %c %c %c", *ptr1, ptr2[0], ptr2[1], ptr2[2], ptr2[3]);
+
+-----
+
+
+
+=========================================================== C REALLOCATE MEMORY
+
+========== Reallocate Memory
+
+
+If the amount of memory you reserved is not enough, you can reallocate it to make it larger.
+
+Reallocating reserves a different (usually larger) amount of memory while keeping the data that was stored in it.
+
+You can change the size of allocated memory with the realloc() function.
+
+The realloc() function takes two parameters:
+
+-----
+int *ptr2 = realloc(ptr1, size);
+-----
+
+
+	* The first parameter is a pointer to the memory that is being resized.
+
+	* The second parameter specifies the new size of allocated memory, measured in bytes.
+
+
+
+The realloc() functions tries to resize the memory at ptr1 and return the same memory address. If it cannot resize the memory at the current address then it will allocate memory at a different address and return the new addres instead.
+
+
+
+NOTE: When realloc() returns a different memory address, the memory at the original address is no longer reserved and it is not safe to use. When the reallocation is done it is good to assign the new pointer to the previous variable so that the old pointer cannot be used accidentaly.
+
+
+Ex:
+-----
+
+Increase the size of allocated memory:
+
+int *ptr1, *ptr2, size;
+
+// Alocate memory of four integers
+size = 4 * sizeof(*ptr1);
+ptr1 = malloc(size);
+
+printf("%d bytes allocated at address %p \n", size, ptr1);
+
+// Resize the memory to hold six integers
+size = 6 * sizeof(*ptr1);
+ptr2 = realloc(ptr1, size);
+
+printf("%d bytes reallocated at address %p \n", size, ptr2);
+
+-----
+
+
+
+========== NULL Pointer & Error Checking
+
+
+The realloc() function returns a NULL pointer if it is not able to allocate more memory. This is very unlikely, but it is worth keeping in mind when you need your code to be failproof.
+
+The following example checks whether realloc() is able to resize memory or not, by checking for a NULL pointer:
+
+
+Check for a NULL pointer:
+
+Ex:
+-----
+
+int *ptr1, *ptr2;
+
+// Allocate memory
+ptr1 = malloc(4);
+
+// Attempt to resize the memory
+ptr2 = realloc(ptr1, 8);
+
+// Check whether realloc is able to resize the memory or not
+if(ptr2 == NULL) {
+  // if reallocation fails
+  printf("Failed. Unable to resize memory");
+} else {
+  //If reallocation is succesful
+  printf("Success. 8 bytes reallocated at address %p \n", ptr2);
+  ptr1 = ptr2;  // Update ptr1 to point to the newly allocated memory
+}
+
+-----
+
+NOTE: You should always include error checking (if pointer == NULL) when allocating memory.
+
+NOTE: You should also always free, or realease, allocated memory when you are done using it. This is important to make sure that your program behaves as expected, but it will also make it more maintainable and efficient.
+
+To free memory, simply use the free() function:
+
+Free allocated memory:
+
+
+Ex:
+-----
+
+// Free allocated memory
+free(ptr1);
+
+-----
+
+We will learn more about how to free allocated memory and whys is this important in the next chapter.
+
+
+
+=========================================================== C DEALLOCATE MEMORY
+
+========== Deallocate (free) Memory
+
+
+When we no longer need a block of memory you should deallocate it. Deallocation is also referred to as "freeing" the memory.
+
+Dynamic memory stays reserved until it is deallocated or until the program ends.
+
+Once the memory is deallocated it can be used by other programs or it may even be allocated to another part of your program.
+
+
+========== Free Memory
+
+To deallocate memory, use the free() function:
+
+-----
+free(pointer);
+-----
+
+
+The pointer parameter is a pointer to the address of the memory to be deallocated:
+
+
+Ex:
+-----
+
+int *ptr;
+ptr = malloc(sizeof(*ptr));
+
+free(ptr);
+ptr = NULL;
+
+-----
+
+ _______________________________________________________________________________________________________
+|													|
+| It is considered a good pratice to set a pointer to NULL after freeing memory so that you		|
+| cannot accidentally continue using it.								|
+|													|
+| If you continue using memory it has been freed you may corrupt data from other programs or even	|
+| another part of your own program.									|
+|_______________________________________________________________________________________________________|
+
+
+A working example including error checking and freeing:
+
+Ex:
+-----
+
+int *ptr;
+ptr = malloc(sizeof(*ptr));  // Allocate memory for one integer
+
+// If memory cannot be allocated, print a message and end the main() function
+if (ptr == NULL) {
+  printf("Unable to allocate memory");
+  return 1;
+}
+
+// Set the value of the integer
+*ptr = 20;
+
+// Print the integer value
+printf("Integer value: %d\n", *ptr);
+
+// Free allocated memory
+free(ptr);
+
+//Set the pointer to NULL to prevent it from beeing accidentally used
+ptr = NULL;
+
+-----
+
+
+
+========== Memory Leaks
+
+A memory leak happens when dynamic memory is allocated but never freed.
+
+In a memory leak happens in a loop or in a function that is called frequently it could take up too much memory and cause the computer to slow down.
+
+There is a risk of a memory leak if a pointer to dynamic memory is lost before the memory can be free. This can happen accidentally, so it is important to be careful and keep track of pointers to dynamic memory.
+
+Here are some examples of how a pointer to dynamic memory may be lost.
+
+
+
+Example 1:
+
+The pointer is overwritten:
+
+-----
+int x = 5;
+int *ptr;
+ptr = calloc(2, sizeof(*ptr));
+ptr = &x;
+-----
+
+
+
+In this example, after the pointer is changed to a point at x, the memory allocated by calloc() can no longer be accessed.
+
+
+
+Example 2:
+
+The pointer exists only inside a function:
+
+-----
+void myFunction() {
+  int *ptr;
+  ptr = malloc(sizeof(*ptr));
+}
+
+int main() {
+  myFunction();
+  printf("The function has ended");
+  return 0;
+}
+-----
+
+
+In this example, the memory that was allocated inside of the function remains allocated after the function ends but it cannot be accessed anymore. One way to prevent this problem is to free the memory before the function ends.
+
+
+
+Example 3:
+
+The pointer gets lost when reallocation fails:
+
+-----
+int* ptr;
+ptr = malloc(sizeof(*ptr));
+ptr = realloc(ptr, 2 * sizeof(*ptr));
+-----
+
+
+If realloc() is unable to reallocate memory it will return a pointer to NULL and the original memory will remain reserved.
+
+In this example, if realloc() fails the the NULL pointer is assigned to the ptr variable, overwriting the original memory address so that it cannot be accessed anymore.
+
+
+
+========== Summary
+
+
+In summary, when managing memory in C, use best pratices:
+
+	1. Remember to check for errors (NULL return values) to find out if memory allocation was
+	   successful or not
+
+	2. Prevent memory leaks - always remeber to frre memory that is no longer used, or else the
+	   program might underperform or even worse, crash if it runs out of memory
+
+	3. Set the pointer to NULL after freeing memory so that you cannot accidentally continue using it
+
+
+
+=========================================================== C Memory Management Example
+
+========== Real-Life Memory Management Example
+
+
+To demonstrate a pratical example of dynamic memory, we created a program  that can make a list of any length.
+
+Regular arrays in C have a fixed length and cannot be changed, but with dynamic memory we can create a list as long as we like:
+
+
+
+Ex:
+-----
+
+struct list {
+  int *data;  // Points to the memory where the list items are stored
+  int numItems;  // Indicates how many items are currenctly in the list
+  int size;  //  Indicates how many items fit in the allocated memory
+};
+
+void addToList(struct list *myList, int item);
+
+int main () {
+  struct list myList;
+  int amout;
+
+  // Create a list and start with enough space for 10 items
+  myList.numItems = 0;
+  myList.size = 10;
+  myList.data = malloc(myList.size * sizeof(int));
+
+  // Find ou if memory allocation was successful
+  if (myList.data == Null) {
+    printf("Memory allocation failed");
+    return 1;  // Exit the program with an error code
+}
+
+  // Add any number of items to the list specified by the amount variable
+  amount = 44;
+  for (int i = 0; i < amount; i++) {
+    addToList(&myList, i + 1);
+  }
+
+  // Display the contents of the list
+  for (int j = 0; j < myList.data[j]);
+  }
+
+  // Free the memory when it is no longer needed.
+  free(myList.data);
+  myList.data = NULL;
+
+  return 0;
+}
+
+// This function adds an item to a list
+voit addToList(struct list *myList, int item) {
+
+  // If the list is full then resize the memory to fit 10 more items
+  if (myList -> numItems == myList -> size) {
+    myList -> size += 10;
+    myList -> data = realloc(myList -> data, myList -> size * sizeof(int));
+  }
+
+  // Add the item to the end of the list
+  myList -> data[myList -> numItems] = item;
+  myList -> numItems++;
+}
+
+-----
+ _______________________________________________________________________________________________________
+|													|
+| Pointers to structures: This example has a pointer to the structure myList. Because we ware using a	|
+| pointer to the structure instead of the structure itself, we use the arrows syntax (->) to access	|
+| the structure's members.										|
+|													|
+|_______________________________________________________________________________________________________|
+
+
+========== Example explained:
+
+This example has three parts:
+
+	* A structure myList that contains a list's data
+
+	* The main() function with the program in it.
+
+	* A function addToList() which adds an item to the list
+
+The myList structure
+
+The myList structure contains all of the information about the list, including its contents. It has three member:
+
+	* data - A pointer to the dynamic memory which contains the contents of the list
+
+	* numItems - Indicates the number of items that list has
+
+	* size - Indicates how many items can fit in the allocated memory
+
+We use a structure so that we can easily pass all of this information into a function.
+
+The main() function
+
+The manin() function starts by initializing the list with space for 10 items:
+
+
+// Create a list and start with enough space for 10 items
+myList.numItems = 0;
+myList.size = 10;
+myList.data = malloc(myList.size * sizeof(int));
+
+myList.numItems is set to 0 because the list starts off empty.
+
+myList.size keeps track of how much memory is reserved. We set it to 10 because we will reserve enough memory for 10 items.
+
+We then allocate the memory and store a pointer to it in myList.data.
+
+Then we include error checking to find out if memory allocation was successful:
+
+
+-----
+
+// Find out if memory allocation was successful
+if (myList.data == NULL) {
+  printf("Memory allocation failed");
+  return 1;  // Exit the program with an error code
+}
+
+-----
+
+
+If everything is fine, a loop adds 44 items to the list using the addToList() function:
+
+
+-----
+
+// Add any member of items to the list specified by the amount variable
+amount = 44;
+for (int i = 0; i < amount; i++) {
+  addToList(&myList, i + 1);
+}
+
+-----
+
+
+In the code above, &myList is a pointer to the list and i + 1 is a number that we want to add to the list. We chose i + 1 so that the list would start at 1 instead of 0. You can choose any number to add to the list.
+
+After all of the items have been added to the list, the next loop prints the contents of the list.
+
+
+-----
+// Display the contents of the list
+for (int j = 0; j < myList.numItems; j++) {
+  printf("%d", myList.data[j]);
+}
+-----
+
+
+When we finish printing the list we free memory to prevent memory leaks.
+
+
+-----
+// Free the memory when it is no longer needed
+free(myList.data);
+myList.data = NULL;
+-----
+
+
+The addToList() function
+
+Our addToList() function adds an item to the list. It takes two parameters:
+
+-----
+void addToList(struct list *myList, int item)
+-----
+
+
+	1. A pointer to the list.
+	2. The value to be added to the list.
+
+The function first checks if the list is full by comparing the number of items in the list to the size of the list. If the list is full then it reallocates the memory to fit 10 more items:
+
+
+-----
+// If the list is full then resize the memory to fit 10 more items
+if (myList -> numItems == myList -> size) {
+  myList -> size += 10;
+  myList -> data = realloc(myList -> data, myList -> size * sizeof(int));
+}
+-----
+
+
+Finally, the function adds the item to the end of list. The index at myList -> numItems is always at the end of the list because it increases by 1 each time a new item is added.
+
+
+-----
+// Add the item to the end of the list
+myList -> data[myList -> numItems] = item;
+myList -> numItems++;
+-----
+
+
+Why do we reserve 10 items at a time?
+
+Optimizing is a balancing act between memory and performance. Even though we may be allocation some memory that we are not using, reallocating memory too frequentely can be inefficient. There is a balance between allocationg too much memory and allocating memory too frequentely.
+
+We chose the number 10 for this example, but it depends on how much data you expected and how often it changes. For example, if we know beforehand that we are going to have exactly 44 items then we can allocate memory for exactly 44 items and only allocate it once.
+
+
+========== Complete stdlib Reference 
+
+Check the complete reference of memory management functions and other function found in the standard library.

@@ -1,0 +1,392 @@
+=========================================================== C FILES
+
+
+In C, you can create, open, read, and writes to files by declaring a pointer of type FILE, and use the fopen() function:
+
+-----
+
+FILE *fptr;
+fptr = fopen(filename, mode);
+
+-----
+
+
+FILE is basically a data type, and we need to create a pointer variable to work with it (fptr). For now, this line is not important. It's just something you need when working with files.
+
+To actually open a file, use the fopen() function, which takes two parameters:
+
+
+|------------------------------------------------------------------------------------------------------------|
+|  Parameter		Description									     |
+| 													     |
+|  filename		The name of the actual file you want to open (or create), like filename.txt	     |
+| 													     |
+|  mode			A single character, which represents what you want to do with the file (read,  	     |
+|			write or append):								     |
+|													     |
+|			w - Writes to a file								     |
+|			a - Appends new data to a file							     |
+|			r - Reads from a file								     |
+|------------------------------------------------------------------------------------------------------------|
+
+
+==========Create a File
+
+
+To create a file, you can use the w mode inside the fopen() function.
+
+The w mode is used to write to a file. However, if the file does not exist, it will create one for you:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Create a file
+fptr = fopen("filename.txt", "w");
+
+// Close the file
+fclose(fptr);
+
+-----
+
+
+NOTE: The file is created in the same directory as your other C files, if nothing else is specified.
+
+
+TIP: If you want to create the file in a specific folder, just provide an absolute path:
+
+
+Closing the file
+
+Did you notice the fclose() function in our example above?
+
+This will close the file when we are done with it.
+
+It is considered as good pratice, because it makes sure that:
+
+	* Changes are saved properly
+	* Other programs can use the file (if you want)
+	* Clean up unnecessary memory space
+
+In the next chapter, you will learn how to write content to a file and read from it.
+
+
+
+=========================================================== C WRITE TO FILES
+
+
+==========Write To a File
+
+Let's use the w mode from the previous chapter again, and write something to the file we just created.
+
+The w mode means that the file is opened for writing. To insert content to it, you can use the printf() function and add the pointer variable (fptr in our example) and some text:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in writing mode
+fptr = fopen("filename.txt", "w");
+
+// Write some text to the file
+fprintf(fptr, "Some text");
+
+// Close the file
+fclose(fptr);
+
+-----
+
+As a result, when we open the file on our computer, it looks like this:
+
+________________________________________________________
+|◧ filename.txt - Notepad		        -  □  x |
+|-------------------------------------------------------|
+| File  Edit  Format  View  Help			|
+|-------------------------------------------------------|
+| Some text						|
+|							|
+|							|
+|							|
+|							|
+|=======================================================|
+
+
+***NOTE: if you write to a file that already exists, the old content is deleted, and the new content is inserted. This is important to know, as you might accidentally erase existing content.
+
+
+
+For example:
+
+Ex:
+-----
+
+fprint(fptr, "Hello World!");
+
+-----
+
+As a result, when we open the file on our computer, it says "Hello World!" instead of "Some text":
+
+________________________________________________________
+|◧ filename.txt - Notepad		        -  □  x |
+|-------------------------------------------------------|
+| File  Edit  Format  View  Help			|
+|-------------------------------------------------------|
+| "Hello World!						|
+|							|
+|							|
+|							|
+|							|
+|=======================================================|
+
+
+=========Append Content To a File
+
+
+If you want to add content to a file without deleting the old content, you can use the a mode.
+
+The a mode appends content at the end of the file:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in append mode
+fptr = fopen("filename.txt", "a");
+
+// Append some text to the file
+fprintf(fptr, "\nHi everybody!");
+
+// Close the file
+fclose(fptr);
+
+-----
+
+As a result, when we open the file on our computer, it looks like this:
+
+________________________________________________________
+|◧ filename.txt - Notepad		        -  □  x |
+|-------------------------------------------------------|
+| File  Edit  Format  View  Help			|
+|-------------------------------------------------------|
+| Hello World!						|
+| Hi everybody!						|
+|							|
+|							|
+|							|
+|=======================================================|
+
+
+***NOTE: Just like with the w mode; if the file does not exist, the a mode will create a new file with the "appended" content.
+
+
+=========================================================== C READ FILES
+
+==========Read a File
+
+
+In the previous chapter, we wrote to a file using "w" and "a" modes inside the fopen() function.
+
+
+To read from a file, you can use the "r" mode:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen ("filename.txt", "r");
+
+-----
+
+
+This will make the filename.txt opened for reading.
+
+
+_______________________________________________________________________________________________________
+|												      |
+| It requires a little bit of work to read a file in C. Hang in there! We will guide you step-bystep. |
+|												      |
+|_____________________________________________________________________________________________________|
+
+
+Next, we need to create a string that should be big enough to store the content of the file.
+
+
+For example, let's create a string that can store up to 100 characters:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen("filename.txt", "r");
+
+// Store the content of the file
+char myString[100];
+
+-----
+
+In order to read the content of filename.txt, we can use the fgets() function.
+
+The fgets() functions takes three parameters:
+
+
+Ex:
+-----
+
+fgets(myString, 100, fptr);
+
+-----
+
+	1. The first parameter specifies where to store the file content, which will be in the myString array we
+	   just created.
+	
+	2. The second parameter specifies the maximum size of data to read, which should match the size of
+	   myString (100).
+	
+	3. The third parameter requires a file pointer that is used to read the file (fptr in our exmaple).
+
+-----
+
+Now, we can print the string, which will output the content of the file:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen("filename.txt", "r");
+
+// Store the content of the file
+char myString[100];
+
+// Read the content and store it inside myString
+fgets(myString, 100, fptr);
+
+// Print the file content
+printf("%s", myString);
+
+// Close the file
+fclose(fptr);
+
+-----
+
+_________________________________
+| Hello World!			|
+|_______________________________|
+
+
+***NOTE: The fgets function only reads the first line of the file. If you remember, there were two lines of text in filename.txt
+
+
+To read every line of the file, you can use a while loop:
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen("filename.txt", "r");
+
+// Store the content of the file
+char myString[100];
+
+// Read the content and print it
+while(fgets(myString, 100, )) {
+  printf("%s", myString);
+}
+
+// Close the file
+fclose(fptr);
+
+-----
+
+ _______________________
+|			|
+|  Hello World!		|
+|			|
+|  Hi everybody!	|
+|_______________________|
+
+
+==========Good Pratice
+
+If you try to open a file for reading that does not exist, the fopen() function will return NULL.
+
+TIP: As a good pratice, we can use an if statement to test for NULL, and print some text instead (when the file does not exist):
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen("loremipsum.txt", "r");
+
+// Print some text if the file does not exist
+if(fptr == NULL) {
+  printf("Not alone to open the file.");
+}
+
+// Close the file
+fclose(fptr);
+
+-----
+
+If the file does not exist, the following text is printed:
+
+ _______________________________
+|				|
+|  Not able to open the file.	|
+|_______________________________|
+
+
+With this in mind, we can create a more sustainable code if we use our "read a file" example above again:
+
+
+Ex:
+-----
+
+FILE *fptr;
+
+// Open a file in read mode
+fptr = fopen("filename.txt", "r");
+
+// Store the content of the file
+char myString[100];
+
+// If the file exist
+if(fptr != NULL) {
+
+  // Read the content and print it
+  while(fgets(myString, 100, fptr)) {
+    printf("%s", myString);
+  }
+
+// If the file does not exist
+} else {
+  printf("Not alone to open the file.");
+}
+
+// Close the file
+fclose(fptr);
+
+ _______________________________
+|				|
+|  Hello World!			|
+|  Hi everybody!		|
+|_______________________________|

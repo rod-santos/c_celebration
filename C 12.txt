@@ -1,0 +1,310 @@
+=========================================================== C VARIABLE SCOPE
+
+Now that we understan how functions work, it is important to learn how varibles act inside and outside of functions.
+
+In C, variables are only accessible inside the region they are created. This is called scope.
+
+
+==========Local Scope
+
+
+A variable created inside a function belongs to the local scope of that function, and can only, be used inside that function:
+
+-----
+
+void myFunction() {
+  // Local variable that belongs to myFunction
+  int x = 5;
+
+  // Print the variable x
+  printf("%d", x);
+}
+
+int main() {
+  myFunction();
+  return 0;
+}
+
+-----
+
+A local variable cannot be used outside the function it belongs to.
+
+If you try to access it outside the function, an error occurs:
+
+-----
+
+void myFunction() {
+  // Local variable that belongs to myFunction
+  int x = 5;
+}
+
+int main() {
+  myFunction();
+
+  // Print the variable x in the main function
+  printf("%d", x);
+  return 0;
+}
+
+-----
+
+
+
+==========Global Scope
+
+
+A variable created outside of a funtion, is called a global variable and belongs to the global scope.
+
+Global variables are available from within any scope, global and local.
+
+A variable create outside of a function is global and can therefo be used by anyone:
+
+-----
+
+// Global variable x
+int x = 5;
+
+void myFunction() {
+  // We can use x here
+  printf("%d", x);
+}
+
+int main() {
+  myFunction();
+
+  // We can also use x here
+  printf("%d", x);
+  return 0;
+}
+
+-----
+
+
+==========Naming Variables
+
+
+If you operate with the same variable name inside and outside of a function, C will treat them as two separate variables; One available in the global scope (outside the funtion) and one available in the local scope (inside the function).
+
+The function will print the local x, and then the code will print the global x:
+
+-----
+
+// Global variable x
+int x = 5;
+
+void myFunction() {
+  // Local variable with the same as the global variable (x)
+  int x = 22;
+  printf("%d\n", x);  // Refers to the local variable x
+}
+
+int main() {
+  myFunction();
+
+  printf("%d\n", x);  // Refers to the global variable x
+  return 0;
+}
+
+-----
+
+
+However, you should avoid using the same variable name for both globally and locally variables as it can lead to errors and confusion.
+
+In general, you should be careful with global values, since they can be accessed and modified from any function.
+
+
+Change the value of x from myFunction:
+
+-----
+
+// Global variable
+int x = 5;
+
+void myFunction() {
+  printf("%d\n", x++);  // Increment the value of x by 1 and print it
+}
+
+int main() {
+  myFunction();
+
+  printf("%d\n", x);  // Print the global variable x
+  return 0;
+}
+
+// The value of x is now 6 (no longer 5)
+
+-----
+
+
+==========Conclusion
+
+
+To sum up, use local variables (with good variable names) as much as you can. This will make your code easier to maintain and better to uderstand. However, you may find global variables when working on exsting C programs or while colaborating with others. Therefore, it is good to understand how the scope works and how we use it effectively to make sure your code is clear and functional.
+
+
+
+=========================================================== C FUNCTION DECLARATION AND DEFINITION
+
+
+==========Function Declaration and Definition
+
+
+We have already learned from the previous chapters that you can create and call a function in the following way:
+
+Ex:
+-----
+
+// Create a function
+void myFunction() {
+  printf("I just got executed!");
+}
+
+
+int main() {
+  myFunction();  // Call the function
+  return 0;
+}
+
+-----
+
+
+A function consist of two parts:
+
+	* Declaration: the funtion's name, return type, and parameters (if any)
+	
+	* Definition: the body of the function (code to be excuted)
+
+-----
+
+void myFunction() { // Declaration
+  // The body of the function (definition)
+}
+
+-----
+
+
+For code optimization, it is recommended to separate the declaration and the definition of the function.
+
+You will often see C programs that have function declaration above main(), and function definition below main(). This will make the code better organized and easier to read:
+
+
+Ex:
+-----
+
+// Function declaration
+void myFunction();
+
+
+// The main method
+int main() {
+  myFunction();  // Call the function
+  return 0;
+}
+
+
+// Function definition
+void myFunction() {
+  printf("Ijust got executed!");
+}
+
+-----
+
+
+==========What About Parameters
+
+
+If we use the example from the function parameters chapter regarding parameters and return values we'll have:
+
+
+Ex:
+-----
+
+int myFuntion (int x, int y) {
+  return x + y;
+}
+
+int main() {
+  int result = myFunctions(5, 3);
+  printf("Result is = %d", result);
+  return 0;
+}
+
+// Outputs 8 (5 + 3)
+
+-----
+
+It is considered good pratice to write it like this instead:
+
+Ex:
+-----
+
+// Function declaration
+int myFunction(int x, int y);
+
+// The main method
+int main() {
+  int result = myFunction(5, 3);  // Call the function
+  printf("Rsult is: %d", result);
+  return 0;
+}
+
+// Function definition
+int myFunction(int x, int y) {
+  return x + y;
+}
+
+-----
+
+===========================================================C RECURSION
+
+==========Recursion
+
+
+Recursion is the technique of making a function call itself. This technique provides a  way to break complicated problems down into simple problems which are easier to solve.
+
+Recursion may be a bit difficult to understand. The best way to figure out how it works is to experiment with it.
+
+
+==========Recursion Example
+
+Adding two numbers together is easy to do, but adding a range of numbers is more complicated. In the following example, recursion is used to add a range of numbers together by break	ng it down into the simple task of adding two numbers:
+
+Ex:
+-----
+
+int sum(int k);
+
+int main() {
+  int result = sum(10);
+  printf("%d", result);
+  return 0;
+}
+
+int sum (int k) {
+  if (k > 0) {
+    return k + sum(k -1);
+  } else {
+    return 0;
+  }
+}
+
+-----
+
+Explanation:
+
+When the sum() function is called, it adds parameter k to the sum of all numbers smaller than k and returns the result. When k becomes 0, the function just returns 0. When running, the program follows these steps:
+
+---------------------------------------------------------
+| 10 + sum(9)						|
+| 10 + (9 + sum(8))					|
+| 10 + (9 + (8 + sum(7)))				|
+| ...							|
+| 10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + sum(0)	|
+| 10 + 9 + 8 + 7 + 6 + 5 + 4 + 3 + 2 + 1 + 0		|
+---------------------------------------------------------
+
+
+Since the function does not call itself when k is 0, the program stops there and returns the result.
+
+
+The developer should be very careful with recursion as it can be quite easy to slip into writing a function which never terminater, or one that uses excess amounts of memory or processor power. However, when written correctly, recursion can be a very efficient and mathematically-elegant approach to programming.

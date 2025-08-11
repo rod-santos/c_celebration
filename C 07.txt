@@ -1,0 +1,395 @@
+=========================================================== C WHILE LOOP
+
+==========Loops
+
+Loops can execute a block of code as long as a specified condition is reached.
+
+Loops are handy beacuse they save time, reduce errors, and they make the code more readable.
+
+
+==========While Loop
+
+The while loop loops through a block of code as long as a specified condition is true:
+
+-----
+
+Syntax
+
+while (condition) {
+  // code block to be executed
+}
+
+-----
+
+In the exemple below, the code in the loop will run, over and over again, as long as variable (i) is less than 5:
+
+Ex:
+
+-----
+
+int i = 0;
+
+while (i < 5) {
+  printf("%d\n", i);
+  i++;
+}
+
+-----
+
+***NOTE: Don't forget to increase the variable used in the condition (i++), otherwise the loop will never end!
+
+
+
+
+
+=========================================================== C DO/WHILE LOOP
+
+==========The Do/While Loop
+
+
+The do/while loop is a variant of the while loop. This loop will execute the code block once, before checking if the condition is true, then it will repeat the loop as long as the condition is true.
+
+Syntax
+
+-----
+
+do {
+  // code block to be executed
+}
+while (condition);
+
+-----
+
+The exemple below uses a do/while loop. The loop will always be executed at least once, even if the condition is false, because the code block is executed before the conditoin is tested:
+
+Ex:
+
+-----
+
+int = 0;
+
+do {
+  printf("%d\n", i);
+  i++;
+}
+while (i < 5);
+
+-----
+
+***NOTE: Don't forget to increase the variable used in the condition, otherwise the loop will never stop!
+
+
+
+=========================================================== C DO/WHILE LOOP
+
+==========Real-Life Examples
+
+
+To demonstrate a pratical example of the while loop, we have created a simple "countdown" program:
+
+Ex:
+
+-----
+
+int countdown = 3;
+
+while (countdown > 0) {
+  printf("%d\n", countdown);
+  countdown--;
+}
+
+printf("Happy New Year!\n");
+
+-----
+
+In the exemple below, we create a program that only print even numbers between 0 and 10 (inclusive):
+
+Ex:
+
+-----
+
+int i = 0;
+
+while (i <= 10) {
+  printf("%d\n", i);
+  i += 2;
+}
+
+-----
+
+In the next exemple we use a while loop to reserve some numbers:
+
+Ex:
+
+-----
+
+// A variable with some specific numbers
+int numbers = 12345;
+
+// A variable to store the reserved number
+int revNumbers = 0;
+
+// Reverse and reorder the numbers
+while (numbers) {
+  // Get the last number of 'numbers' and add it to 'revNumber'
+  revNumbers = revNumbers * 10 + numbers % 10;
+  // Remove the last number of 'numbers'
+  numbers /= 10;
+}
+
+-----
+
+To demonstrate a pratical example of the while loop combined with an if else statement, let's say we play a game of Yatzy:
+
+Ex:
+
+-----
+
+Print "Yatzy!" if the dice number is 6:
+
+int dice = 1;
+
+while (dice <= 6) {
+  if (dice < 6) {
+    printf("No Yatzy\n");
+  } else {
+    printf("Yatzy!\n");
+  }
+  dice = dice + 1;
+}
+
+-----
+
+If the loop passes the values ranging from 1 to 5, it prints "No Yatzy". Whenever it passes the value 6, it prints "Yatzy!".
+
+
+
+=========================================================== C FOR LOOP
+
+=====For Loop
+
+When you know exactly how many times you want to loop through a block of code, use the for loop instead of a while loop:
+
+-----
+
+Syntax
+
+for (expression 1; expression 2; expression 3) {
+  // code block to be executed
+}
+
+	* Expression 1 is executed (one time) before the execution of the code block.
+
+	* Expression 2 defines the condition for executing the code block.
+
+	* Expression 3 is executed (every time) after the code block code has been executed.
+
+-----
+
+The exemple below will print the numbers 0 to 5:
+
+-----
+
+Ex:
+
+int i;
+
+for (i = 0; i <= 5; i++) {
+  printf("%d\n", i);
+}
+
+-----
+
+Explanation: 
+
+	Expression 1 sets a variable before the loop starts (int i = 0).
+
+	Expression 2 defines the condition fot the loop to run (i must be less than or equal to 5).
+	If the condition is true, the loop will start over again, if it is false, the loop will end.
+
+	Expression 3 increases the value of i (i++) each time the code block in the loop has been executed.
+
+
+
+=========================================================== C NESTED LOOPS
+
+=====Nested Loops
+
+It is also possible to place a loop inside another loop. This is called a nested loop.
+
+The "inner loop" will be executed one time for each of the "outer loop":
+
+-----
+
+Ex:
+
+int i, j;
+
+// Outer loop
+for (i = 1; i <= 2; ++i) {
+  printf("Outer: %d\n", i);  // Executes 2 times
+
+  // Inner loop
+  for (j = 1; j <= 3; ++j) {
+    printf(" Inner: %d\n", j);  // Executes 6 times (2 * 3)
+  }
+}
+
+-----
+
+
+=========================================================== C FOR LOOP EXAMPLES
+
+=====Real-Life Examples
+
+To demonstrate a pratical example of the for loop, let's create a program that counts to 100 by tens:
+
+-----
+
+Ex:
+
+for (i = 0; i <= 100; i += 10) {
+  printf("%d\n", i);
+}
+
+-----
+
+In the next example, we create a program that only even numbers between 0 and 10 (incluse):
+
+-----
+
+Ex:
+
+for (i = 0; i <= 10; i = i + 2) {
+  printf("%d\n", i);
+}
+
+-----
+
+Here we only print odd numbers:
+
+-----
+
+Ex:
+
+for (i = 1; i < 10; i = i + 2) {
+  printf("%d\n", i);
+}
+
+-----
+
+In this one we print the powers of 2 up to 4096:
+
+-----
+
+Ex:
+
+for (i = 2; i <= 4096; i *= 2) {
+  printf("%d\n", i);
+}
+
+-----
+
+And in this example, we create a program that prints the multiplication table for a specified number:
+
+-----
+
+Ex:
+
+int number = 2;
+int i;
+
+// Print the multiplication table for the number 2
+for (i = 1; i <= 10; i++) {
+  printf("%d x %d = %d\n", number, i, number * i);
+}
+
+return 0;
+
+-----
+
+
+
+=========================================================== C BREAK AND CONTINUE
+
+=====Break
+
+We have already seen the break statement used in an earlier chapter. It was used to "jump out" of a switch statement.
+
+The break statement can also be used to jump out of a loop.
+
+This example jumps out of the for loop when i is equal to 4:
+
+-----
+
+Ex:
+
+int i;
+
+for (i = 0; i < 10; i++) {
+  if (i == 4) {
+    break;
+  }
+  printf("%d\n," i);
+}
+
+-----
+
+
+=====Continue
+
+The continue statement breaks one iteration (in the loop), if a specified condition occurs, and continues with the next iteration in the loop.
+
+This example skips the value of 4:
+
+-----
+
+Ex:
+
+int i;
+
+for (i = 0; i < 10; i++) {
+  if (i == 4) {
+    continue;
+  }
+  printf("%d\n", i);
+}
+
+-----
+
+=========================================================== C BREAK AND CONTINUE WHILE LOOP
+
+We can also use break and continue in while loops:
+
+-----
+
+Break example:
+
+int i = 0;
+
+while (i < 10) {
+  if (i == 4) {
+    break;
+  }
+  printf("%d\n", i);
+  i++;
+}
+
+-----
+
+-----
+
+Continue example:
+
+int i = 0;
+
+while (i < 10) {
+  if (i == 4) {
+    i++;
+    continue;
+  }
+  printf("%d\n", i);
+  i++;
+}
+
+-----

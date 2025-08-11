@@ -1,0 +1,382 @@
+=========================================================== C Booleans Examples
+
+Real Life Example
+
+Let's think of a "real life example" where we need to find out if a person is old enough to vote.
+
+In the example below, we use the >= comparison operator to find out if age (25) is greater than OR equal to the voting age limit, which is set to 18.
+
+-----
+
+Ex:
+
+int myAge = 25;
+int votingAge = 18;
+
+-----
+
+printf("%d", myAge >= votingAge);	// Returns 1 (true), meaning 25 years old are allowed to vote!
+
+
+Cool, right? An even better approach (since we are on a roll now), would be to wrap the code above in an if..else statement, so we can perform different actions depending on the result:
+
+Ex:
+
+Output "Old enough to vote!" if myAge is greater than or equal to 18. Otherwise output "Not old enough to vote."
+
+
+int myAge = 25;
+int votingAge = 18;
+
+  if (myAge >= votingAge) {
+    printf("You are old enough to vote!");
+  } else {
+    printf("You are not old enough to vote!");
+  }
+
+
+***NOTE: Booleans are the basis for all comparisons and conditions.
+
+We will learn more about conditions (if...else) in the next chapter.
+
+
+
+=========================================================== C If ... Else
+
+Conditions and If Statements
+
+We have already learned that C supports the usual logical conditions from mathematics:
+
+	* Less than: a < b
+	* Less than or equal to: a <= b
+	* Greater than: a > b
+	* Greater than or equal to: a >= b
+	* Equal to: a == b
+	* Not Equal to: a != b
+
+
+We can use these conditions to perform different actions for different decisions.
+
+C has the following conditional statements:
+
+	* Use if() to specify a block of code to be executed, if a specific condition is true
+	* Use else() to specify a block of code to be executed, if the same condition is false
+	* Use else if() to specify a new condition to test, if the first condition is false
+	* Use switch() to specify many alternative block of code to be executed
+
+
+
+=====The if Statement
+
+Use if statement to specify a block of code to be executed if a condition is true.
+
+Syntax:
+
+if (condition) {
+  // Block of code to be executed if the condition is true;
+}
+
+
+
+***NOTE: "if" is always in lowercase letters. Uppercase letters (If or IF) will generate an error.
+
+
+In the exemple below, we test two values to find out if 20 is greater than 18. If the condition is true, print some text:
+
+Ex:
+
+if (20 > 18) {
+  printf("20 is greater than 18");
+}
+
+
+We can also test variables:
+
+Ex:
+
+int x = 20;
+int y = 18;
+if (x > y) {
+  printf("x is greater than y");
+  }
+
+
+In the exemple above we use two variables, x and y, to test whether x is greater than y (using the > operator). As x is 20, and y is 18, and we know that 20 is greater than 18, we print to the screen that "x is greater than y".
+
+
+=========================================================== C Else
+
+=====The else Statement
+
+We use the else statement to specify a block of code to be executed if the condition is false.
+
+Syntax
+
+-----
+
+if (condition) {
+    // block of code to be executed if the condition is true
+  } else {
+    // block of code to be executed if the condition is false
+  }
+
+-----
+
+Ex:
+
+int time = 20;
+if (time < 18) {
+  printf("Good Day.");
+} else {
+  printf("Good evening.");
+}
+// Outputs "Good evening."
+
+In the exemple above, time (20) is greater than 18, so the condition is false. Because of this, we move on to the else condition and print to the screen "Good evening". If the time was less than 18, the program would print "Good day."
+
+
+
+=========================================================== C Else If
+
+=====The else if Statement
+
+Use the else if statement to specify a new condition if the first condition is false.
+
+Syntax
+
+if (condition 1) {
+  // block of code to be executed if the condition 1 is true
+} else if (condition 2) {
+  // block of code to be executed if the condition 2 is true
+} else {
+  // block of code to be executed if the condition 1 AND condition 2 is false
+}
+
+Ex:
+
+int time = 22;
+if (time < 10) {
+  printf("Good morning.");
+} else if (time < 20) {
+  printf("Good day.");
+} else {
+  printf("Good evening.");
+}
+// Outputs "Good evening."
+
+Explanation: 
+
+In the exemple above, time (22) is greater than 10, so the first condition is false. The next condition, in the else if statement, is also false, so we move on to the else condition since condition1 and condition2 is both false - print to the screen "Good evening."
+
+However, if the time was 14, our program would print "Good day."
+
+
+
+===========================================================C Short Hand If Else
+
+==========The Ternary Operator
+
+
+
+There is also a short-hand if else, which is known as the ternary operator because it consists of three operands. It can be used to replace multiple lines of code with a single line. It is often used to replace simple if else statements:
+
+Syntax
+
+variable = (condition) ? expreesionTrue : expressionFalse;
+
+
+-----
+
+
+***Instead of writing:
+
+int time = 20;
+if (time < 18) {
+  printf("Good day.");
+} else {
+  printf("Good evening.");
+}
+
+
+***We can just write:
+
+int time = 20;
+(time < 18) ? printf("Good day.") : printf("Good evening.");
+
+
+It is completely up to tou if you want to use the traditional if...else statement or the ternary operator.
+
+
+
+
+===========================================================C If...Else Examples
+
+=====Real-Life Examples
+
+The example below shows us how we can use if..else to "open a door" if the user enters the correct code:
+
+Ex:
+
+int doorCode = 1337;
+
+if (doorCode == 1337) {
+  printf ("Correct code.\nThe door is now open.");
+} else {
+  printf("Wrong code.\nThe door reamains closed.");
+}
+
+
+The next example shows how we can use if..else to find out if a number is positive or negative:
+
+-----
+
+int myNum = 10; // Is this a positive or negative number?
+
+if (myNum > 0) {
+  printf("The value is a positive number.");
+} else if (myNum < 0) {
+  printf("The value is a negative number.");
+} else {
+  printf("The value is 0.");
+}
+
+-----
+
+Find out if a person is old enough to vote:
+
+int myAge = 25;
+int votingAge = 18;
+
+if (myAge >= votingAge) {
+  printf("Old enough to vote!");
+} else {
+  printf("Not old enough to vote.");
+}
+
+-----
+
+Find out if a number is even or odd:
+
+int myNum = 5;
+
+if (myNum % 2 == 0) {
+  printf("%d is even.\n", myNum);
+} else {
+  printf("%d is odd.\n", myNum);
+}
+
+-----
+
+=========================================================== C Switch
+
+Switch Statement
+
+Instead of writing many if...else statements, you can use the switch statement.
+
+The switch statement selects one of many blocks to be executed:
+
+-----
+
+Syntax
+
+switch (expression) {
+  case x:
+    // block of code to be executed
+    break;
+  case y:
+    // block of code to be executed
+    break;
+  default:
+    // block of code to be executed
+}
+
+-----
+
+This is how it works:
+
+	* The switch expression is evalueted once
+
+	* The value of the expression is compared with the values of each case
+
+	* If there is a match, the associated block of code is executed
+
+	* The break statement breaks out of the switch code block and stops the execution
+
+	* The default statement is optional, and specifies some code to run if there is no case match
+
+
+The example below uses the weekday number to calculate the weekday name:
+
+Ex:
+
+-----
+
+int day = 4;
+
+switch (day) {
+  case 1:
+    printf("Monday");
+    break;
+  case 2:
+    printf("Tuesday");
+    break;
+  case 3:
+    printf("Wednesday");
+    break;
+  case 4:
+    printf("Thursday");
+    break;
+  case 5:
+    printf("Friday");
+    break;
+  case 6:
+    printf("Saturday");
+    break;
+  case 7:
+    printf("Sunday");
+    break;
+}
+
+// Outputs "Thursday" (day 4)
+
+-----
+
+The break Keyword
+
+When C reaches a break keyword, it breaks out of the switch block.
+
+This will stop the execution of more code and case testing inside the block.
+
+When a match is found, and the jobe is done, it's time for a break. There is no need for more testing.
+
+
+
+***A break can save a lot of execution time because it "ignores" the execution of all the rest of the code in the switch block.
+
+
+=====The default Keyword
+
+The default keyword specifies some code to run if there is no case match:
+
+Ex:
+
+-----
+
+int day = 4;
+
+switch (day) {
+  case 6:
+    print("Today is Saturday");
+    break;
+  case 7:
+    print("Today is Sunday");
+    break;
+  default:
+    printf("Looking forward to the Weekend");
+}
+
+// Outputs "Looking forward to the Weekend"
+
+-----
+
+***NOTE: The default keyword must be used as the last statement in the switch, and it does not need a break.

@@ -1,0 +1,362 @@
+=========================================================== C ARRAYS
+
+=====Arrays
+
+Arrays are used to store multiple values in a single variable, instead of declaring separate variables for each value.
+
+To create an array, define the data type (like int) and specify the name of the array followed by square brackets [].
+
+To insert values to it, use a comma-separeted list, inside curly braces:
+
+-----
+
+int myNumbers[] = {25, 50, 75, 100};
+
+-----
+
+We have now created a variable that holds an array of four integers.
+
+
+
+=====Access the Elements of an Array
+
+To access an array element, refer to its index number.
+
+Array indexes start 0: [0] is the first element. [1] is the second element, etc.
+
+This statement access the value of the fisrt element [0] in myNumbers:
+
+-----
+
+Ex:
+
+int myNumbers[] = {25, 50, 75, 100};
+printf("%d", myNumbers[0]);
+
+// Outputs 25
+
+-----
+
+
+
+=====Change an Array Element
+
+
+
+To change a value of a specific element, refer to the index number:
+
+-----
+
+Ex:
+
+myNumbers[0] = 33;
+
+
+int myNumbers[] = {25, 50, 75, 100};
+myNumbers[0] = 33;
+
+printf("%d", myNmbers[0]);
+
+// Now outputs 33 instead of 25
+
+
+
+=====Loop Through an Array
+
+
+
+We can loop through the array elements with the for loop.
+
+The following example outputs all elements in the myNumbers array:
+
+
+
+-----
+
+Ex:
+
+int myNumbers[] = {25, 50, 75, 100};
+int i;
+
+for (i = 0; i < 4; i++) {
+  printf("%d\n", myNumbers[i]);
+}
+
+-----
+
+
+
+=====Set Array Size
+
+Another commmon way to create arrays, is to specify the size of the array, and add elements later:
+
+
+-----
+
+Ex:
+
+// Declare an array of four integers:
+int myNumbers[4];
+
+// Add elements
+myNumbers[0] = 25;
+myNumbers[1] = 50;
+myNumbers[2] = 75;
+myNumbers[3] = 100;
+
+-----
+
+
+
+Using this method, we should know the number of array elements in advice, in order for the program to store enough memory.
+
+***NOTE: You are not able to change the size of the array after the creation.
+
+
+
+
+
+=========================================================== C ARRAY SIZE
+
+=====Get Array Size or Length
+
+To get the size of an array, you can use the sizeof operator:
+
+-----
+
+Ex:
+
+int myNumbers[] = {10, 25, 50, 75, 100};
+printf("%lu", sizeof(myNumbers));  // Prinsts 20
+
+-----
+
+***Why did the result show 20 instead of 5, when the array contains 5 elements?
+
+-It is because the sizeof operator returns the size of a type in bytes.
+
+We learned from the Data Types Chapter that an int type is usually 4 bytes, so from the exemple above, 4 x 5 (4 bytes x 5 elements) = 20 bytes
+
+Knowing the memory size of an array is great when you are working with larger programs that require good memory management.
+
+But when you just want to find out how many elements an array has, you can use the following  formula (which divides the size of the array by the size of one array element):
+
+
+
+-----
+
+Ex:
+
+int myNumbers[] = {10, 25, 50, 75, 100};
+int length = sizeof(myNumbers) / sizeof(myNumbers[0]);
+
+printf("%d", length);
+
+-----
+
+
+
+=====Making Better Loops
+
+In the array loops section in the previous chapter, we wrote the size of the array in the loop condition (i < 4). This is not ideal, since it will only work for arrays of a specified size.
+
+However, by using the sizeof formula from the example above, we can now make loop that work for arrays of any size, which is more sustainable.
+
+Instead of writing:
+
+-----
+
+Ex:
+
+int myNumbers[] = {25, 50, 75, 100};
+int i;
+
+for (i = 0; i < 4; i++) {
+  printf("%d\n", myNumbers[i]);
+}
+
+-----
+
+Write:
+
+-----
+
+Ex:
+
+int myNumber[] = {25, 50, 75, 100};
+int length = sizeof(myNumbers) / sizeof(myNumbers[0]);
+int i;
+
+for (i = 0; i < length; i++) {
+  printf("%d\n", myNumbers[i]);
+}
+
+
+
+
+
+=========================================================== C ARRAYS - REAL-LIFE EXAMPLES
+
+=====Real-Life Examples
+
+
+
+To demonstrate a pratical example of using arrays, let's create a program that calculates the average of different ages:
+
+
+
+-----
+
+Ex:
+
+// An array storing different ages
+int ages[] = {20, 22, 18, 35, 48, 26, 87, 70};
+
+float avg, sum = 0;
+int i;
+
+// Get the length of the array
+int length = sizeof(ages) / sizeof(ages[0]);
+
+// Loop through the elements of the array
+for (i = 0; i < length; i++) {
+  sum += ages[i];
+}
+
+// Calculate the average by dividing the sum by the length
+avg = sum / length;
+
+//Print the average
+printf("The average age is: %.2f", avg);
+
+-----
+
+And in the next example, we create a program that finds the lowest age among different ages:
+
+-----
+
+Ex:
+
+// An array storing different age
+int ages[] = {20, 22, 18, 35, 48, 26, 87, 70};
+
+int i;
+
+// Get the length of the array
+int length = sizeof(ages) / sizeof(ages[0]);
+
+// Create a variable and assign the first array element of ages to it
+int lowestAge = ages[0];
+
+// Loop through the elements of the ages array to find the lowest age
+for (i = 0; i < length; i++) {
+  if (lowestAge > ages[i]) {
+    lowestAge = ages[i];
+  }
+}
+
+-----
+
+
+
+=========================================================== C MULTIDIMENSIONAL ARRAYS
+
+=====Multidimensional Arrays
+
+In the previous chapter, we learned about arrays, which is also known as single dimension arrays. These are great, and something we will use a lot while programming in C. However, if we want to store datas as a tabular form, like a table with rows and columns, we need to get familiar with multidimensional arrays.
+
+A multidimensional array is basically an array of arrays.
+
+Arrays can have any number of dimensions. In this chapter, we will introduce the most common; two-dimensional arrays (2D).
+
+=====Two-Dimensional Arrays
+
+A 2D array is also known as a matrix (a table of rows and columns).
+
+To create a 2D array of integers, take a look at the following example:
+
+
+
+int matrix[2][3] = { {1, 4, 2}, {3, 6, 8} };
+
+
+
+The first dimension represents the number of rows [2], while the second dimension represents the number of columns [3]. The values are placed in row-order, and can be visualized lije this:
+
+
+	=============================================================
+	|	    |	COLUMN 0   |	COLUMN 1    |	COLUMN 2    |
+	-------------------------------------------------------------
+	|  ROW 0    |	   1	   |	   4	    |	   2	    |
+	-------------------------------------------------------------
+	|  ROW 1    |	   3	   |	   6	    |	   8	    |
+	=============================================================
+
+
+
+=========================================================== C ACCESS THE ELEMENTS OF A 2D ARRAY
+
+
+
+
+
+To access the element of a two-multidimensional array, you must specify the index number of both the row and column.
+
+This statement accesses the value of the element in the first row (0) and third column (2) of the matrix array.
+
+-----
+
+Ex:
+
+int matrix[2][3] = { {1, 4, 2}, {3, 6, 8}};
+
+printf("%d", matrix[0][2]);  // Outputs 2
+
+-----
+
+
+***NOTE: This representation is some kind of ordered pair in the Cartesian Plain
+
+***REMEMBER THAT: Array indexes start with 0: [0] is the first element. [1] is the second element, etc.
+
+
+
+=========================================================== C CHANGE ELEMENTS IN A 2D ARRAY
+
+To change the value of an element, refer to the index number of the element in each of the dimensions:
+
+The following example will chage the value of the element in the first row (0) and first column (0):
+
+-----
+
+Ex:
+
+int matrix[2][3] = { {1, 4, 2}, {3, 6, 8} };
+matrix[0][0] = 9;
+
+printf("%d",matrix [0][0]);  // Now outputs 9 instead of 1
+
+-----
+
+
+=====Loop Through a 2D Array
+
+To loop through a multi-dimensional array, we need one loop for each of the array's dimensions.
+
+The following example outputs all elements in the matrix array:
+
+-----
+
+Ex:
+
+int matrix[2][3] = { {1, 4, 2}, {3, 6, 8} };
+
+int i, j;
+for (i = 0; i < 2; i++) {
+  for (j = 0; j < 3; j++) {
+    printf("%d\n", matrix[i][j]);
+  }
+}
+
+-----
+

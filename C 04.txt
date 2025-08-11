@@ -1,0 +1,416 @@
+=========================================================== C Data Types
+
+As metioned before, a variable in C must be a specified data type, and we must use a format specifier inside the printf() function to display it:
+
+//Create variables
+int myNum = 5;		 //Interger (whole number)
+float myFloatNum = 5.99;  //Floating point number
+char myLetter = 'D';	 //Character
+
+//Print variables
+printf("%d\n", myNumber);
+printf("%f\n", myFloatNum);
+printf("%c\n", myLetter);
+
+
+
+========== Basic Data Types
+
+
+The data type specifies the size and type of information the variable will store.
+
+In this tutorial, we fill focus on the most basic ones:
+
+
+_________________________________________________________________________________________________
+| Data Type	Size		Description					Example	    	|
+|												|
+| int		2 or 4 bytes	Stores whole numbers, without decimals		1		|
+|												|
+| float		4 bytes		Stores fractional numbers, containing		3.14		|
+|				one or more decimals. Can store 6-7 decimals.			|
+|												|
+| double	8 bytes		Stores fractional numbers.		3.14159265		|
+|				Can store 15 decimal digits.					|
+|												|
+| char		1 byte		Stores a single character/letter/number		'A'		|
+|				or ASCII values.						|
+-------------------------------------------------------------------------------------------------
+
+
+===== Basic Format Specifiers
+
+
+There are different format specifiers for each data type. Here are some of them:
+
+
+		=================================================================
+		| Format Specifier	    Data Type			        |
+		|								|
+		|    %d or %i		     int				|
+		|								|
+		|    %f or %F		     float				|
+		|								|
+		|    %e			     Números em notação científica	|
+		|								|
+		|    %lf		     double				|
+		|								|
+		|    %c			     char				|
+		|								|
+		|    %s			     Used for strings ("text")		|
+		|								|
+		|    X			     Números inteiros em base decimal	|
+		|								|
+		|   .<num>z%		     Epecifíca n° de casas .00 to show	|
+		|								|
+		|    ^char	    Exclui caracteres especificados // scanf()  |
+		=================================================================
+		
+		
+		
+***NOTE: It is important that you use the correct format specifier for the specified data type to avoid errors.
+
+
+
+=========================================================== C Character Data Types
+
+
+The char Type
+
+The char data type is used to store a single character.
+
+The character must be surrounded by single quotes like 'A' or 'c', and we use the %c format specifier to print it:
+
+Ex:
+
+char myGrade = 'A';
+printf("%c", myGrade);
+
+
+Alternatively, if you are familiar with ASCII, you can use ASCII values to display certain characters. Note that these values are not surrounded by quotes (''), as they are numbers:
+
+Ex:
+
+char a = 65, b = 66, c = 67;
+printf("%c", a); 
+printf("%c", b);
+printf("%c", c);
+
+***NOTE: To know this values consulte some ASCII reference table
+
+
+==========Notes on Characters
+
+
+If you try to store more than a single character, it will only print the last character:
+
+-----
+
+Ex:
+
+char myText = 'Hello';
+printf("%c", myText);
+
+-----
+
+***NOTE: Do not use the char data type to store multiple-characters text, use string intead.
+
+In the example bellow we'll use the char data type to create an array of characters:
+
+Ex:
+
+char myText[] = "Hello";
+printf("%s", myText);
+
+
+
+=========================================================== C Numeric Data Types
+
+Numeric Types
+
+Use int to store whole numbers without decimals, like 35 or 1000, and float or double when you need a floating point number (with decimals), like 9.99 or 3.1415.
+
+Ex:
+
+int myNum = 1000;
+printf("%d", myNum);
+
+float myFloatNum = 3.1415;
+printf("%f", myFloatNum);
+
+double myLargeFloatNum = 3.14159265
+printf("%lf", myLargeFloatNum);
+
+***NOTE: FLOAT vs. DOUBLE
+
+We must choose between float or double depending on how many decimal digits we're gonna store.
+The precision of float is six to seven decimal digits. While double has fifteen decimal digits precision.
+
+For safety reason we sould use the double data type, but it also consumes the twice memory (8 bytes) compared to float.
+
+========== Scientific Numbers
+
+A floating piont number can also be a scientific number with an "e" or "E" to indicate the power of 10:
+
+Ex:
+
+float f1 = 35e3;
+double d1 = 12E4
+
+printf("%f", f1);
+printf("%lf", d1);
+
+
+========== C Decimal Precision
+
+You have probably already noticed that if you print a float point number, the output will show many digits agter the decimal point:
+
+Ex:
+
+float myFloatNum = 3.5;
+double myDoubleNum = 19.99;
+
+printf("%f\n", myFlaotNum);	//Outputs 3.500000
+printf("%lf", myDOubleNum);	//Outputs 19.990000
+
+If you want to remove the extra zeros (set decimal precision), you can use a dot (.) followed bya number that specifies how many digits that should be shown after the decimal point:
+
+float myFlaotNum = 3.5;
+
+printf("%f\n", myFloatNum);	//Default will show 6 digits after the decimal point.
+printf("%.1f\n", myFloatNum);	//Only show 1 digit after the decimal point.
+printf("%.2f\n", myFloatNum);	//Only show 2 digits after the decimal point.
+printf("%3.f\n", myFloatNum);	//Only show 3 digits after the decimal point.
+printf("%.4f", myFloatNum);	//Only show 4 digits after the decimal point.
+
+
+=========================================================== C The sizeof() Operator
+
+
+
+Get the Memory Size
+
+Each data type take an amount of memory to store values:
+
+|=======================================|
+| Data Type		Size		|
+| int			2 or 4 bytes	|
+| float			4 bytes		|
+| double		8 bytes		|
+| char			1 byte		|
+|=======================================|
+
+To actually get the size (in bytes) of a data type or variable, use the sizeof() operator:
+
+int myInt;
+float myFloat;
+double myDouble;
+cahr myChar;
+
+printf("%lu\n", sizeof(myInt));
+printf("%lu\n", sizeof(myFloat));
+printf("%lu\n", sizeof(myDouble));
+printf("%lu\n", sizeof(myChar));
+
+
+
+***NOTE: We use the %lu format specifier to print the result, instead of %d. It is because the compiler expects the sizeof() operator to return a "long unsigned int (%lu), instead of int (%d). On some computers it might work with %d, but it is safer to use %lu.
+
+WHY WE SHOULD KNOW the SIZE of DATA TYPES?
+
+Knowing the size of different data types is important because is says something about memory usage and performance.
+
+For example, the size of a char type is 1 byte. Which means if you have an array of 1000 char values, it will occupy 1000 bytes (1 KB) of memory.
+
+Using the right data  type for the right purpose will save memory and improve the performance of your program.
+
+
+
+=========================================================== C Data Types Examples
+
+==========Real Life Examples
+
+Here we use a example that calculate and output the total cost of a number of items:
+
+//Create variables of different data types
+int items = 50;
+float cost_per_item = 9.99;
+float total_cost = intems * cost_per_item;
+char currency = '$';
+
+//Print variables
+printf("Number of items: %d\n", items);
+printf("Cost per item: %.2f %c\n", cost_per_item, currency);
+printf("Total cost = %2f %c\n", total_cost, currency);
+
+
+
+=========================================================== C Type Conversion
+
+
+
+==========Type Conversion
+
+
+
+Sometimes, we have to convert the value of one data type to another type. This is known as type conversion.
+
+
+For example, if you try to divide two integers, 5 by , you would expect the result to be 2.5. But since we are working with integers (and not floatin-point values), the following exemple will just output 2:
+
+Ex:
+
+int x = 5;
+int y = 2;
+int sum = x / y;
+
+printf("%d\n", sum); //Outputs 2
+
+
+To get the right result, we need to know how type conversion works.
+
+There are two types of conversion in C:
+
+	|=======================================|
+	| *Implicit Conversion (Automatically)  |
+	|					|
+	| *Explicit Conversion (Manually)	|
+	|=======================================|
+
+
+===============Implicit Conversion
+
+
+Implicit conversion is done automatically by the compiler when you assign a value of one type to another.
+
+For exmaple, if you assign an int value to a float type:
+
+-----
+
+Ex:
+
+//Automatic conversion: int to  float
+float myFloat = 9;
+
+
+printf("%f\n", myFloat); //9.000000
+
+-----
+
+
+As we can see, the compiler automatically converts the int value 9 to a float value of 9.000000.
+
+This can be risky, as you might lose control over specific values in certain situations.
+
+Especially if it was the other way around - the following example automatically converts the float value 9.99 to an int value of 9:
+
+
+-----
+
+Ex:
+
+// Automatic conversion: float to int
+int myInt = 9.99;
+
+printf("%d", myInt); // Outputs 9
+
+-----
+
+
+
+But, what happened to .99? We might what that data in our program! Sobe careful. It is important that you know how the compiler work is these situations, to avoid unexpected results.
+
+
+As another example, if you divide two integers: 5 by 2, you know that the result is 2.5. And as you know form the beginning of this page, if you store the result as an integer, it will only display the number 2.
+
+
+Therefore, it would be better to store the result as a float or a double, right?
+
+
+Ex:
+-----
+
+float result = 5 / 2;
+printf("%f", sum);	// Outputs 2.000000
+
+-----
+
+
+
+Why is the result 2.00000 and not 2.5? Well, it is because 5 and 2 are still integers in the division. In this case, we neet to manually convert the integer values to floating-point values.
+
+
+
+==========Explicit Conversion
+
+
+
+Explicit conversion is done manually by placing the type in the parenthesis () in front of the value.
+
+Considering our problem form the example above, we can now get the right result:
+
+
+
+Ex:
+-----
+
+// Manual conversion: int to float
+float sum = (float) 5 / 2;
+
+printf("%f", sum); // Now this line outuput 2.500000
+
+-----
+
+
+
+We can also place the type in front of a variable:
+
+
+Ex:
+-----
+
+int num1 = 5;
+int num2 = 2;
+float sum = (float) num1 / num2;
+
+printf("%f", sum); //2.500000
+
+-----
+
+
+
+And since we learned about "decimal precision" in the previou chapter, we could male the output even cleaner by removing the extra zeros (if you like):
+
+int num1 = 5;
+int num2 = 2;
+float sum = (float) num1 / num2;
+
+printf("%.1f", sum); //2.5
+
+
+
+==========Real-Life Examples
+
+
+
+Here's a real-life example of data types and type conversion where we create a program to calculate the percentage of a user's score in relation to the maximum score in a game:
+
+
+
+Ex:
+-----
+
+//Set the maximum possible score in the game to 500
+int maxScore = 500;
+
+//The actual score of the user
+int userScore = 423;
+
+/* Calculate the percentage of the user's score in relation to the maximum available score.
+Convert userScore to float to make sure that the division is accurate */
+float percentage = (float) userScore / maxScore * 100.0;
+
+//Print the percentage
+printf("User's percentage is %.2f", percentage);
+
+-----
